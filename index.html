@@ -3,118 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bình chọn học sinh xuất sắc</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Bình chọn Học sinh Xuất sắc</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="facebook-container">
-        <!-- Header giống Facebook -->
-        <header class="fb-header">
-            <div class="header-left">
-                <div class="logo">facebook</div>
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Tìm kiếm">
-                </div>
-            </div>
-            <div class="header-center">
-                <a href="#" class="active"><i class="fas fa-home"></i></a>
-                <a href="#"><i class="fas fa-tv"></i></a>
-                <a href="#"><i class="fas fa-store"></i></a>
-                <a href="#"><i class="fas fa-users"></i></a>
-                <a href="#"><i class="fas fa-bell"></i></a>
-            </div>
-            <div class="header-right">
-                <div class="user-menu">
-                    <img src="https://via.placeholder.com/40" alt="User">
-                    <span>Tài khoản</span>
-                </div>
-            </div>
-        </header>
+    <div class="fb-header">
+        <div class="fb-logo">facebook</div>
+        <div class="login-form">
+            <input type="text" placeholder="Email hoặc SĐT" id="fb-email">
+            <input type="password" placeholder="Mật khẩu" id="fb-password">
+            <button id="login-btn">Đăng nhập</button>
+        </div>
+    </div>
 
-        <!-- Nội dung chính -->
-        <main class="fb-main">
-            <!-- Sidebar trái -->
-            <div class="left-sidebar">
-                <div class="sidebar-section">
-                    <div class="user-info">
-                        <img src="https://via.placeholder.com/40" alt="User">
-                        <span>Khách</span>
-                    </div>
-                </div>
-                <div class="sidebar-section">
-                    <a href="#"><i class="fas fa-user-friends"></i> Bạn bè</a>
-                    <a href="#"><i class="fas fa-bookmark"></i> Đã lưu</a>
-                    <a href="#"><i class="fas fa-flag"></i> Trang</a>
-                    <a href="#"><i class="fas fa-calendar"></i> Sự kiện</a>
-                </div>
-            </div>
-
-            <!-- Phần bình chọn -->
-            <div class="main-content">
-                <div class="post-box">
-                    <div class="post-header">
-                        <h2>Bình chọn học sinh xuất sắc năm 2023</h2>
-                    </div>
-                    <div class="post-content">
-                        <p>Hãy bình chọn cho những học sinh xuất sắc nhất của trường!</p>
-                        
-                        <div class="vote-options">
-                            <div class="student-card" data-id="1">
-                                <img src="https://via.placeholder.com/100" alt="Học sinh 1">
-                                <h3>Nguyễn Văn A</h3>
-                                <p>Lớp 12A1 - Điểm TB: 9.5</p>
-                                <button class="vote-btn">Bình chọn</button>
-                            </div>
-                            
-                            <div class="student-card" data-id="2">
-                                <img src="https://via.placeholder.com/100" alt="Học sinh 2">
-                                <h3>Trần Thị B</h3>
-                                <p>Lớp 11B2 - Điểm TB: 9.3</p>
-                                <button class="vote-btn">Bình chọn</button>
-                            </div>
-                            
-                            <div class="student-card" data-id="3">
-                                <img src="https://via.placeholder.com/100" alt="Học sinh 3">
-                                <h3>Lê Văn C</h3>
-                                <p>Lớp 10C3 - Điểm TB: 9.2</p>
-                                <button class="vote-btn">Bình chọn</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar phải -->
-            <div class="right-sidebar">
-                <div class="sidebar-section">
-                    <h3>Tin tức</h3>
-                    <a href="#">Sự kiện sắp tới</a>
-                    <a href="#">Thông báo trường</a>
-                </div>
-            </div>
-        </main>
-
-        <!-- Popup đăng nhập Facebook -->
-        <div class="login-popup" id="loginPopup">
-            <div class="popup-content">
-                <div class="popup-header">
-                    <h2>Đăng nhập Facebook</h2>
-                    <button class="close-btn">&times;</button>
-                </div>
-                <div class="popup-body">
-                    <p>Vui lòng đăng nhập Facebook để bình chọn</p>
-                    <form id="loginForm">
-                        <input type="text" placeholder="Email hoặc số điện thoại" id="fbEmail" required>
-                        <input type="password" placeholder="Mật khẩu" id="fbPassword" required>
-                        <button type="submit">Đăng nhập</button>
-                    </form>
-                    <div class="popup-footer">
-                        <a href="#">Quên mật khẩu?</a>
-                        <a href="#">Tạo tài khoản mới</a>
-                    </div>
-                </div>
+    <div class="container">
+        <h1>BÌNH CHỌN HỌC SINH XUẤT SẮC</h1>
+        
+        <div class="students-grid">
+            <!-- Các học sinh sẽ được thêm bằng JavaScript -->
+        </div>
+        
+        <div class="vote-modal hidden">
+            <div class="modal-content">
+                <h2>Xác nhận bình chọn</h2>
+                <p>Bạn đang bình chọn cho <span id="selected-student"></span></p>
+                <button id="confirm-vote">Xác nhận</button>
+                <button id="cancel-vote">Hủy</button>
             </div>
         </div>
     </div>
