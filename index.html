@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook UFC Exporter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Facebook UFC Exporter</h1>
+        <div class="warning">
+            <strong>⚠️ CẢNH BÁO BẢO MẬT:</strong> UFC file chứa thông tin đăng nhập Facebook. Không chia sẻ với người khác!
+        </div>
+        
+        <div class="step">
+            <h2>Bước 1: Lấy cookie từ Facebook</h2>
+            <ol>
+                <li>Đăng nhập vào Facebook trên trình duyệt</li>
+                <li>Mở DevTools (F12)</li>
+                <li>Vào Application → Cookies → https://www.facebook.com</li>
+                <li>Sao chép toàn bộ cookie dưới dạng JSON</li>
+            </ol>
+            <button id="copy-instructions">Sao chép hướng dẫn</button>
+        </div>
+        
+        <div class="step">
+            <h2>Bước 2: Dán cookie vào đây</h2>
+            <textarea id="cookie-input" placeholder="Dán cookie JSON vào đây..."></textarea>
+        </div>
+        
+        <div class="step">
+            <h2>Bước 3: Tạo UFC file</h2>
+            <button id="generate-btn">Tạo UFC File</button>
+            <div id="result" class="hidden">
+                <h3>UFC File của bạn:</h3>
+                <textarea id="ufc-output" readonly></textarea>
+                <button id="copy-btn">Sao chép UFC</button>
+                <button id="download-btn">Tải xuống</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Công cụ này chỉ phục vụ mục đích giáo dục. Không lạm dụng!</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
